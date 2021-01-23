@@ -11,11 +11,15 @@ export class LettersGen extends BaseGen {
     generate(){
       const index = Math.floor(Math.random()* this.chars.length);
       const symbol = this.chars[index];
-      return this.upperCase ? symbol.toUpperCase() : symbol;
+      return symbol;
     }
-    withUpperCase() {
-        this.upperCase = true;
-        return this;
+}
+export class LettersGenUpperCased extends LettersGen {
+    static create(){
+        return new LettersGenUpperCased();
+    }
+    generate() {
+        return super.generate().toUpperCase();
     }
 }
 

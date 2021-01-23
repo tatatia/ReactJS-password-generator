@@ -1,4 +1,4 @@
-import { LettersGen } from './LettersGen';
+import { LettersGen, LettersGenUpperCased } from './LettersGen';
 describe('LettersGen', () => {
 
     test('Should generate random symbol from chars propperty', () => {
@@ -8,7 +8,7 @@ describe('LettersGen', () => {
     });
 
     test('Should generate random symbol from chars propperty in upper case', () => {
-        const gen = LettersGen.create().withUpperCase();
+        const gen = LettersGenUpperCased.create();
         const symbol = gen.generate();
         expect(symbol).toEqual(symbol.toUpperCase());
     });
