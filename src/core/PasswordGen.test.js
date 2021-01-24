@@ -1,6 +1,6 @@
 import { PasswordGen } from './PasswordGen';
 
-describe.only('Password generator', () => {
+describe('Password generator', () => {
     let strategies = [
         {
             generate() {
