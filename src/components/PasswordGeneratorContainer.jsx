@@ -24,24 +24,50 @@ class PasswordGeneratorContainer extends React.Component {
         this.setState((state) => ({ ...state, suggestedPassword }));
     };
 
-    generatePassword() {}
+    generatePassword() { }
 
     setLength = (length) => {
         this.generator.setLength(length);
-        this.setState((state) => ({ ...state, length }), 
-        () => this.getPassword()
+        this.setState((state) => ({ ...state, length }), this.getPassword);
+    };
+
+    removeStrategy = (strategyName) => {
+        const { strategies } = this.state;
+        if (strategies.size === 1) {
+            return;
+        }
+        const updateStrategies = new Set(strategies);
+        updateStrategies.delete(strategyName)
+        this.setState((state) => ({ ...state, strategies: updateStrategies }),
+            this.getPassword
         );
+    };
+
+    addStrategy = (strategyName) => {
+        const strategies = new Set(this.state.strategies);
+        strategies.add(strategyName);
+        this.setState((state) => ({ ...state, strategies }), this.getPassword);
+    };
+
+    toggleStrategy = (strategyName) => {
+        const { strategies } = this.state;
+        if (strategies.has(strategyName)) {
+            this.removeStrategy(strategyName);
+        } else {
+            this.addStrategy(strategyName);
+        }
     }
-    toggleStrategy(strategyName) {}
 
     render() {
-        const { suggestedPassword, length } = this.state;
+        const { suggestedPassword, length, strategies } = this.state;
         return (
             <PasswordGenerator
                 suggestedPassword={suggestedPassword}
                 onLengthChange={this.setLength}
+                onStrategyChange={this.toggleStrategy}
                 length={length}
                 strategyList={ALL_STRATEGIES}
+                activeStrategies={[...strategies]}
             />
         );
     }

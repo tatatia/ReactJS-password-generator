@@ -14,6 +14,8 @@ export const PasswordGenerator = ({
     length,
     onLengthChange,
     strategyList,
+    activeStrategies,
+    onStrategyChange,
     minLength = 3
 }) => {
     return (
@@ -23,8 +25,8 @@ export const PasswordGenerator = ({
             </Typography>
             <Box display='flex' justifyContent='flex-start'>
                 <Typography>Length: {length}</Typography>
-                </Box>
-                <Box display='flex' justifyContent='flex-start'>
+            </Box>
+            <Box display='flex' justifyContent='flex-start'>
                 <Slider
                     value={length}
                     onChange={(_, newValue) => onLengthChange(newValue)}
@@ -33,11 +35,21 @@ export const PasswordGenerator = ({
                     max={40}
                 />
             </Box>
-            {/* <Box display='flex' justifyContent='flex-start'>
-                {strategyList.map((strategy) => (
-                    <FormControlLabel control={<Checkbox />} />
+            <Box display='flex' justifyContent='flex-start'>
+                {strategyList.map((strategyName) => (
+                    <FormControlLabel
+                        label={strategyName}
+                        control={
+                            <Checkbox
+                                checked={activeStrategies.indexOf(strategyName) !== -1}
+                                onChange={() => onStrategyChange(strategyName)}
+                                name={'strategy_' + strategyName}
+                                color='primary'
+                            />
+                        }
+                    />
                 ))}
-            </Box> */}
+            </Box>
         </Container>
     );
 };
